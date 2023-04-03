@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable
+            name="myViewModel"
+            type="com.example.roomdatabasedemo.SubscriberViewModel" />
+    </data>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".MainActivity">
+        <EditText
+            android:id="@+id/et_subscriber_name"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:hint="Subscriber's Name"
+            android:text="@={myViewModel.inputName}"
+            android:layout_marginHorizontal="@dimen/_20sdp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        <EditText
+            android:id="@+id/et_subscriber_email"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/et_subscriber_name"
+            android:hint="Subscriber's Email"
+            android:text="@={myViewModel.inputEmail}"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:layout_marginHorizontal="@dimen/_20sdp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        <Button
+            android:id="@+id/btn_save"
+            app:layout_constraintTop_toBottomOf="@+id/et_subscriber_email"
+            app:layout_constraintStart_toStartOf="@+id/et_subscriber_email"
+            app:layout_constraintEnd_toStartOf="@+id/btn_clear_all"
+            android:text="@={myViewModel.saveOrUpdateButtonText}"
+            android:onClick="@{()-> myViewModel.saveOrUpdate()}"
+            android:textColor="@color/black"
+            android:backgroundTint="@color/grey"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <Button
+            android:id="@+id/btn_clear_all"
+            app:layout_constraintTop_toBottomOf="@+id/et_subscriber_email"
+            app:layout_constraintStart_toEndOf="@+id/btn_save"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:text="@={myViewModel.clearAllOrDeleteButtonText}"
+            android:onClick="@{()->myViewModel.clearAllOrDelete()}"
+            android:textColor="@color/black"
+            android:backgroundTint="@color/grey"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <ScrollView
+            app:layout_constraintTop_toBottomOf="@+id/btn_clear_all"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_subscriber_list"
+            android:layout_marginHorizontal="@dimen/_20sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        </ScrollView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
