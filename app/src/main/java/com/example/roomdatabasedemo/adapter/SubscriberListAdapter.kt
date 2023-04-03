@@ -1,21 +1,21 @@
 package com.example.roomdatabasedemo.adapter
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.roomdatabasedemo.R
-import com.example.roomdatabasedemo.databinding.RowSubscriberItemBinding
 import com.example.roomdatabasedemo.roomdb.Subscriber
-import org.w3c.dom.Text
 
-class SubscriberListAdapter(private val mList: List<Subscriber>,
+class SubscriberListAdapter(
 private val clickListener: (Subscriber)-> Unit): RecyclerView.Adapter<ViewHolder>() {
+    private val mList = ArrayList<Subscriber>()
+    fun setList(subscribers: List<Subscriber>) {
+        mList.clear()
+        mList.addAll(subscribers)
+    }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int):ViewHolder {
         val view: View = LayoutInflater.from(parent.context).inflate(R.layout.row_subscriber_item,
             parent,false)
@@ -28,6 +28,7 @@ private val clickListener: (Subscriber)-> Unit): RecyclerView.Adapter<ViewHolder
     override fun getItemCount(): Int {
         return mList.size
     }
+
 
 
 }

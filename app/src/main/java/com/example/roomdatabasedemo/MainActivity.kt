@@ -17,6 +17,7 @@ import com.example.roomdatabasedemo.roomdb.SubscriberRepository
 class MainActivity : AppCompatActivity() {
     private lateinit var mainBinding: ActivityMainBinding
     private lateinit var subscriberViewModel : SubscriberViewModel
+    private lateinit var listAdapter: SubscriberListAdapter
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main)
@@ -27,26 +28,35 @@ class MainActivity : AppCompatActivity() {
         mainBinding.myViewModel = subscriberViewModel
         mainBinding.lifecycleOwner = this
         setSubscriberListToRecyclerView()
+
+        subscriberViewModel.message.observe(this, Observer{
+            it.getContentIfNotHandled()?.let {
+                Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
+            }
+        })
     }
 
     private fun setSubscriberListToRecyclerView() {
         mainBinding.rvSubscriberList.layoutManager = LinearLayoutManager(this)
+        listAdapter = SubscriberListAdapter { selectedItem: Subscriber ->
+            subscriberItemClicked(
+                selectedItem
+            )
+        }
+        mainBinding.rvSubscriberList.adapter = listAdapter
         displaySubscriberList()
     }
 
     private fun displaySubscriberList(){
         subscriberViewModel.subscribers.observe(this, Observer {
             Log.i("MyTag", it.toString())
-           mainBinding.rvSubscriberList.adapter = SubscriberListAdapter(it) { selectedItem: Subscriber ->
-               subscriberItemClicked(
-                   selectedItem
-               )
-           }
+            listAdapter.setList(it)
+            listAdapter.notifyDataSetChanged()
         })
     }
 
     private fun subscriberItemClicked(subscriber: Subscriber) {
-        Toast.makeText(this, "selected item name is: ${subscriber.name}", Toast.LENGTH_SHORT).show()
+        //Toast.makeText(this, "selected item name is: ${subscriber.name}", Toast.LENGTH_SHORT).show()
         subscriberViewModel.initUpdateOrDelete(subscriber)
     }
 }
