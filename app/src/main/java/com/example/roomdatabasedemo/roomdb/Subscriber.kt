@@ -9,10 +9,10 @@ data class Subscriber(
 
     @PrimaryKey(autoGenerate = true)
 
-    @ColumnInfo(name = "subscriber_name")
+    @ColumnInfo(name = "subs_id")
     var id:Int,
 
-    @ColumnInfo(name = "subscriber_id")
+    @ColumnInfo(name = "subscriber_name")
     var name:String,
 
     @ColumnInfo(name = "subscriber_email")
